@@ -233,29 +233,44 @@
         }
         
         // --- Function to fetch and display video list ---
-        async function fetchVideoList() {
-            videoList.innerHTML = '';
-            loadingMessage.classList.remove('hidden');
+async function fetchVideoList() {
+    videoList.innerHTML = '';
+    loadingMessage.classList.remove('hidden');
 
-            try {
-                const response = await fetch('http://localhost:3000/videos');
-                
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
+    try {
+        const cloudinaryUrl = 'https://dnxbxatyi:uAHuk0h3l_DZ-ZYXEykrBgrgPdk@api.cloudinary.com/v1_1/dnxbxatyi/resources/video?max_results=30';
+        
+        const response = await fetch(cloudinaryUrl, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
 
-                const videos = await response.json();
-                
-                loadingMessage.classList.add('hidden');
+        const data = await response.json();
+        const videos = data.resources;
+        
+        loadingMessage.classList.add('hidden');
 
-                if (videos && videos.length > 0) {
-                    videos.forEach(video => {
-                        addVideoToList(video.public_id, video.secure_url);
-                    });
-                } else {
-                    videoList.innerHTML = '<div class="text-center text-gray-400">कोई वीडियो नहीं मिला। कृपया एक वीडियो अपलोड करें।</div>';
-                }
-            } catch (error) {
+        if (videos && videos.length > 0) {
+            videos.forEach(video => {
+                addVideoToList(video.public_id, video.secure_url);
+            });
+        } else {
+            videoList.innerHTML = '<div class="text-center text-gray-400">कोई वीडियो नहीं मिला। कृपया एक वीडियो अपलोड करें।</div>';
+        }
+    } catch (error) {
+        loadingMessage.classList.add('hidden');
+        console.error('Error fetching videos:', error);
+        videoList.innerHTML = '<div class="text-center text-red-400">वीडियो लोड करने में त्रुटि।</div>';
+    }
+}
+          
+             catch (error) {
                 loadingMessage.classList.add('hidden');
                 console.error('Error fetching videos:', error);
                 videoList.innerHTML = '<div class="text-center text-red-400">वीडियो लोड करने में त्रुटि।</div>';
@@ -435,4 +450,5 @@
         document.addEventListener('DOMContentLoaded', fetchVideoList);
     </script>
 </body>
+
 </html>
