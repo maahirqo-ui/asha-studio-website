@@ -194,6 +194,39 @@
     </div>
 
     <script>
+// नेविगेशन बटन
+const navVideos = document.getElementById('nav-videos');
+const navAbout = document.getElementById('nav-about');
+const navContact = document.getElementById('nav-contact');
+
+// सेक्शन्स
+const videoGallerySection = document.getElementById('video-gallery-section');
+const aboutUsSection = document.getElementById('about-us-section');
+const contactUsSection = document.getElementById('contact-us-section');
+
+// यह फ़ंक्शन सेक्शन को दिखाता है
+function navigateTo(section) {
+    // सभी सेक्शन को छिपाएं
+    videoGallerySection.classList.add('hidden');
+    aboutUsSection.classList.add('hidden');
+    contactUsSection.classList.add('hidden');
+
+    // चुने हुए सेक्शन को दिखाएं
+    section.classList.remove('hidden');
+}
+
+// बटनों पर क्लिक करने पर नेविगेशन चलाएं
+navVideos.addEventListener('click', () => {
+    navigateTo(videoGallerySection);
+});
+
+navAbout.addEventListener('click', () => {
+    navigateTo(aboutUsSection);
+});
+
+navContact.addEventListener('click', () => {
+    navigateTo(contactUsSection);
+});
         // Cloudinary Credentials
         const CLOUDINARY_CLOUD_NAME = 'dnxbxatyi';
         const CLOUDINARY_UPLOAD_PRESET = 'asha_studio_upload';
@@ -280,6 +313,27 @@ async function fetchVideoList() {
         // --- Show/hide sections
         function showSection(sectionId) {
             videoGallerySection.classList.add('hidden');
+<section id="video-gallery-section" class="py-12 bg-[#121212] min-h-screen">
+    ...
+</section>
+
+<section id="about-us-section" class="py-12 bg-[#121212] min-h-screen hidden">
+    <div class="container mx-auto">
+        <h2 class="text-3xl text-white font-bold mb-4 text-center">हमारे बारे में</h2>
+        <div class="text-white text-center">
+            <p>हमारा स्टूडियो वेडिंग फ़िल्ममेकर है।</p>
+            </div>
+    </div>
+</section>
+
+<section id="contact-us-section" class="py-12 bg-[#121212] min-h-screen hidden">
+    <div class="container mx-auto">
+        <h2 class="text-3xl text-white font-bold mb-4 text-center">संपर्क करें</h2>
+        <div class="text-white text-center">
+            <p>आप हमसे यहाँ संपर्क कर सकते हैं।</p>
+            </div>
+    </div>
+</section>
             profilePageSection.classList.add('hidden');
             aboutPageSection.classList.add('hidden');
             packagesPageSection.classList.add('hidden');
@@ -452,3 +506,4 @@ async function fetchVideoList() {
 </body>
 
 </html>
+
